@@ -84,7 +84,7 @@ def policy_iteration(env, policy_evaluation_fn=policy_evaluation, discount_facto
                 A[a] += prob * (reward + discount_factor * V[next_state])
         return A
 
-    # Start with a random policy
+    
     policy = np.ones([env.observation_space.n, env.action_space.n]) / env.action_space.n
 
     while True:
@@ -190,16 +190,16 @@ def main():
     print("*" * 5 + " Policy evaluation " + "*" * 5)
     print("")
     
-    # Uniform random policy: each action equally likely
+   
     policy = np.ones([env.observation_space.n, env.action_space.n]) / env.action_space.n
 
-    # Evaluate random policy
+    
     v = policy_evaluation(env, policy)
     print("State values under random policy:")
     print(v.reshape(env.shape))
     print("")
 
-    # Test: Make sure the evaluated policy is what we expected
+    
     expected_v = np.array([-106.81, -104.81, -101.37, -97.62, -95.07,
                            -104.81, -102.25, -97.69, -92.40, -88.52,
                            -101.37, -97.69, -90.74, -81.78, -74.10,
@@ -211,7 +211,7 @@ def main():
     print("*" * 5 + " Policy iteration " + "*" * 5)
     print("")
     
-    # Policy iteration
+    
     policy_pi, v_pi = policy_iteration(env, policy_evaluation)
 
     print("Optimal state values from policy iteration:")
@@ -222,14 +222,14 @@ def main():
     action_symbols = {0: "U", 1: "R", 2: "D", 3: "L"}
     policy_grid = []
     for s in range(env.observation_space.n):
-        if s in [24]:  # terminal state
-            policy_grid.append("T")
+        if s in [24]:  
+            policy_grid.append("X")
         else:
             policy_grid.append(action_symbols[np.argmax(policy_pi[s])])
     print(np.array(policy_grid).reshape(env.shape))
     print("")
 
-    # Test: Make sure the value function is what we expected
+    
     expected_v_pi = np.array([-8., -7., -6., -5., -4.,
                              -7., -6., -5., -4., -3.,
                              -6., -5., -4., -3., -2.,
@@ -241,7 +241,7 @@ def main():
     print("*" * 5 + " Value iteration " + "*" * 5)
     print("")
     
-    # Value iteration
+    
     policy_vi, v_vi = value_iteration(env)
 
     print("Optimal state values from value iteration:")
@@ -251,14 +251,14 @@ def main():
     print("Optimal policy from value iteration (as actions):")
     policy_grid_vi = []
     for s in range(env.observation_space.n):
-        if s in [24]:  # terminal state
+        if s in [24]:  
             policy_grid_vi.append("X")
         else:
             policy_grid_vi.append(action_symbols[np.argmax(policy_vi[s])])
     print(np.array(policy_grid_vi).reshape(env.shape))
     print("")
 
-    # Test: Make sure the value function is what we expected
+    
     expected_v_vi = np.array([-8., -7., -6., -5., -4.,
                               -7., -6., -5., -4., -3.,
                               -6., -5., -4., -3., -2.,
@@ -267,7 +267,7 @@ def main():
     np.testing.assert_array_almost_equal(v_vi, expected_v_vi, decimal=1)
     print("Value iteration test passed!")
 
-    # Compare runtimes
+    
     compare_runtimes(env)
 
 
