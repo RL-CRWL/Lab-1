@@ -12,6 +12,36 @@ import timeit
 import matplotlib.pyplot as plt
 
 
+#EXCERCISE 1.1
+
+def generate_random_trajectory(env, max_steps=30):
+    state = env.reset()
+    trajectory = []
+    actions = ["U", "D", "L", "R"] 
+
+    for _ in range(max_steps):
+        action = env.action_space.sample() 
+        next_state, reward, done, _ = env.step(action)
+        trajectory.append((state, action))
+        state = next_state
+        if done:
+            break
+    return trajectory
+
+
+def print_trajectory_as_grid(env, trajectory):
+    grid_size = env.shape[0]
+    action_symbols = {0: "U", 1: "D", 2: "L", 3: "R"}
+    grid = [["." for _ in range(grid_size)] for _ in range(grid_size)]
+
+    for (s, a) in trajectory:
+        row, col = divmod(s, grid_size)
+        grid[row][col] = action_symbols[a]
+
+    for row in grid:
+        print(" ".join(row))
+
+
 def policy_evaluation(env, policy, discount_factor=1.0, theta=0.00001):
     """
     Evaluate a policy given an environment and a full description of the environment's dynamics.
@@ -108,6 +138,12 @@ def main():
     print("")
     env.render()
     print("")
+
+    trajectory = generate_random_trajectory(env, max_steps=20)
+    print("Random trajectory (actions at visited states):")
+    print_trajectory_as_grid(env, trajectory)
+    print("")
+
 
     # TODO: generate random policy
 
