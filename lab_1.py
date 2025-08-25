@@ -6,6 +6,10 @@
 # 2333776 Refiloe Mopeloa
 ###
 
+
+#to use gym_env: source gym_env/bin/activate
+
+
 import numpy as np
 from environments.gridworld import GridworldEnv
 import timeit
@@ -32,7 +36,7 @@ def generate_random_trajectory(env, max_steps=30):
 def print_trajectory_as_grid(env, trajectory):
     grid_size = env.shape[0]
     action_symbols = {0: "U", 1: "D", 2: "L", 3: "R"}
-    grid = [["." for _ in range(grid_size)] for _ in range(grid_size)]
+    grid = [["o" for _ in range(grid_size)] for _ in range(grid_size)]
 
     for (s, a) in trajectory:
         row, col = divmod(s, grid_size)
